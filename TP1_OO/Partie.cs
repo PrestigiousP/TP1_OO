@@ -6,6 +6,7 @@ namespace TP1_OO
 {
     class Partie
     {
+        //test
         //Cartes de coeur.
         Carte asCoeur = new Carte(1, Carte.Couleur.Coeur);
         Carte deuxCoeur = new Carte(2, Carte.Couleur.Coeur);
