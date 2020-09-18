@@ -6,7 +6,7 @@ namespace TP1_OO
 {
     class Partie
     {
-        //tes
+        //te
 
         //Cartes de coeur.
         Carte asCoeur = new Carte(1, Carte.Couleur.Coeur);
