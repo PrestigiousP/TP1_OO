@@ -5,7 +5,8 @@ using System.Text;
 namespace TP1_OO
 {
     class Paquet
-    { 
+    {
+
         //Cartes de coeur.
         Carte asCoeur = new Carte(1, Carte.Couleur.Coeur);
         Carte deuxCoeur = new Carte(2, Carte.Couleur.Coeur);
@@ -64,8 +65,14 @@ namespace TP1_OO
         Carte roiPique = new Carte(13, Carte.Couleur.Pique);
         //-----------------------------------------------------------------
         //Paquet de cartes.
-        Carte[] paquet = new Carte[52];
-        
+        private Carte[] paquet = new Carte[52];
+        private Carte[] paquetTemp = new Carte[1];
+        private Carte[] paquetTemp2 = new Carte[1];
+
+        public Carte getCarte(int i)
+        {
+            return paquet[i];
+        }
         public Paquet()
         {
             paquet[0] = asCoeur;
@@ -122,6 +129,30 @@ namespace TP1_OO
             paquet[51] = roiPique;
 
         }
-        
+
+
+        //Brasser les cartes
+        public void Brasser(int _nbFois)
+        {
+            int nbFois = _nbFois;
+
+            Random random = new Random();
+            Random random2 = new Random();
+
+
+
+            // va swap entre deux cases aléatoire de l'array.
+            for (int i = 0; i < nbFois; i++)
+            {
+                int randNum = random.Next(0, 53); // retourne un int random entre 0 et 52
+                int randNum2 = random.Next(0, 53);
+
+                paquetTemp[0] = paquet[randNum]; // sauvegarde les cartes dans un temp
+                paquetTemp2[0] = paquet[randNum2];
+
+                paquet[randNum2] = paquetTemp[0]; // swap les feux valeurs originales
+                paquet[randNum] = paquetTemp2[0];
+            }
+        }
     }
 }

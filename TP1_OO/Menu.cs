@@ -67,7 +67,7 @@ namespace TP1_OO
                         {
                             case 1:
                                 //ajouter deux joueurs.
-
+                                Test();
                                 break;
                             case 2:
                                 //ajouter trois joueurs.
@@ -90,6 +90,16 @@ namespace TP1_OO
                     }
                 }
 
+            }
+            static void Test()
+            {
+                Paquet paquet = new Paquet();
+                for(int i = 0; i < 52; i++)
+                {
+                   //Console.WriteLine(paquet.getCarte(i));
+                    paquet.Brasser(2);
+                    Console.WriteLine(paquet.getCarte(i));
+                }
             }
         }
     }

@@ -61,7 +61,7 @@ namespace TP1_OO
                     val = "cinq";
                     break;
                 case 6:
-                    val = "6";
+                    val = "six";
                     break;
                 case 7:
                     val = "sept";
@@ -101,7 +101,7 @@ namespace TP1_OO
                     coul = "pique";
                     break;
             }
-            name = val + "de " + coul;
+            name = val + " de " + coul;
             return name;
             //Console.WriteLine()
 
