@@ -69,6 +69,7 @@ namespace TP1_OO
         private Carte[] paquetTemp = new Carte[1];
         private Carte[] paquetTemp2 = new Carte[1];
 
+        //Retourne la valeur d'une carte dans le paquet.
         public Carte getCarte(int i)
         {
             return paquet[i];
@@ -144,8 +145,8 @@ namespace TP1_OO
             // va swap entre deux cases aléatoire de l'array.
             for (int i = 0; i < nbFois; i++)
             {
-                int randNum = random.Next(0, 53); // retourne un int random entre 0 et 52
-                int randNum2 = random.Next(0, 53);
+                int randNum = random.Next(0, 52); // retourne un int random entre 0 et 52
+                int randNum2 = random.Next(0, 52);
 
                 paquetTemp[0] = paquet[randNum]; // sauvegarde les cartes dans un temp
                 paquetTemp2[0] = paquet[randNum2];

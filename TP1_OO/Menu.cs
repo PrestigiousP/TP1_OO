@@ -97,7 +97,7 @@ namespace TP1_OO
                 for(int i = 0; i < 52; i++)
                 {
                    //Console.WriteLine(paquet.getCarte(i));
-                    paquet.Brasser(2);
+                    paquet.Brasser(1000);
                     Console.WriteLine(paquet.getCarte(i));
                 }
             }
