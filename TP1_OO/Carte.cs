@@ -26,7 +26,18 @@ namespace TP1_OO
             this.valeur = valeur;
             this.couleur = couleur;
         }
+        
+       public int getValeur()
+        {
+            return valeur;
+        }
 
+       public Couleur getCouleur()
+        {
+            return couleur;
+        }
+
+        
        override public string ToString()
         {
             string val = "";
@@ -50,7 +61,7 @@ namespace TP1_OO
                     val = "cinq";
                     break;
                 case 6:
-                    val = "6";
+                    val = "six";
                     break;
                 case 7:
                     val = "sept";
@@ -90,9 +101,10 @@ namespace TP1_OO
                     coul = "pique";
                     break;
             }
-            name = val + "de " + coul;
+            name = val + " de " + coul;
             return name;
             //Console.WriteLine()
+
         }
 
     }
