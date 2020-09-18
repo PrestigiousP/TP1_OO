@@ -26,7 +26,18 @@ namespace TP1_OO
             this.valeur = valeur;
             this.couleur = couleur;
         }
+        
+       public int getValeur()
+        {
+            return valeur;
+        }
 
+       public Couleur getCouleur()
+        {
+            return couleur;
+        }
+
+        
        override public string ToString()
         {
             string val = "";
@@ -93,6 +104,7 @@ namespace TP1_OO
             name = val + "de " + coul;
             return name;
             //Console.WriteLine()
+
         }
 
     }

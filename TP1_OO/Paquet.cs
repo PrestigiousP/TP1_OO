@@ -4,9 +4,8 @@ using System.Text;
 
 namespace TP1_OO
 {
-    class Partie
-    {
-        //test
+    class Paquet
+    { 
         //Cartes de coeur.
         Carte asCoeur = new Carte(1, Carte.Couleur.Coeur);
         Carte deuxCoeur = new Carte(2, Carte.Couleur.Coeur);
@@ -63,6 +62,66 @@ namespace TP1_OO
         Carte valetPique = new Carte(11, Carte.Couleur.Pique);
         Carte damePique = new Carte(12, Carte.Couleur.Pique);
         Carte roiPique = new Carte(13, Carte.Couleur.Pique);
+        //-----------------------------------------------------------------
+        //Paquet de cartes.
+        Carte[] paquet = new Carte[52];
+        
+        public Paquet()
+        {
+            paquet[0] = asCoeur;
+            paquet[1] = deuxCoeur;
+            paquet[2] = troisCoeur;
+            paquet[3] = quatreCoeur;
+            paquet[4] = cinqCoeur;
+            paquet[5] = sixCoeur;
+            paquet[6] = septCoeur;
+            paquet[7] = huitCoeur;
+            paquet[8] = neufCoeur;
+            paquet[9] = dixCoeur;
+            paquet[10] = valetCoeur;
+            paquet[11] = dameCoeur;
+            paquet[12] = roiCoeur;
+            paquet[13] = asCarreau;
+            paquet[14] = deuxCarreau;
+            paquet[15] = troisCarreau;
+            paquet[16] = quatreCarreau;
+            paquet[17] = cinqCarreau;
+            paquet[18] = sixCarreau;
+            paquet[19] = septCarreau;
+            paquet[20] = huitCarreau;
+            paquet[21] = neufCarreau;
+            paquet[22] = dixCarreau;
+            paquet[23] = valetCarreau;
+            paquet[24] = dameCarreau;
+            paquet[25] = roiCarreau;
+            paquet[26] = asTrefle;
+            paquet[27] = deuxTrefle;
+            paquet[28] = troisTrefle;
+            paquet[29] = quatreTrefle;
+            paquet[30] = cinqTrefle;
+            paquet[31] = sixTrefle;
+            paquet[32] = septTrefle;
+            paquet[33] = huitTrefle;
+            paquet[34] = neufTrefle;
+            paquet[35] = dixTrefle;
+            paquet[36] = valetTrefle;
+            paquet[37] = dameTrefle;
+            paquet[38] = roiTrefle;
+            paquet[39] = asPique;
+            paquet[40] = deuxPique;
+            paquet[41] = troisPique;
+            paquet[42] = quatrePique;
+            paquet[43] = cinqPique;
+            paquet[44] = sixPique;
+            paquet[45] = septPique;
+            paquet[46] = huitPique;
+            paquet[47] = neufPique;
+            paquet[48] = dixPique;
+            paquet[49] = valetPique;
+            paquet[50] = damePique;
+            paquet[51] = roiPique;
 
+        }
+        
     }
 }
