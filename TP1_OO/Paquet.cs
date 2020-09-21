@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace TP1_OO
@@ -64,17 +65,28 @@ namespace TP1_OO
         Carte damePique = new Carte(12, Carte.Couleur.Pique);
         Carte roiPique = new Carte(13, Carte.Couleur.Pique);
         //-----------------------------------------------------------------
-        //Paquet de cartes.
-        private Carte[] paquet = new Carte[52];
-        private Carte[] paquetTemp = new Carte[1];
-        private Carte[] paquetTemp2 = new Carte[1];
 
-        //Retourne la valeur d'une carte dans le paquet.
-        public Carte getCarte(int i)
+        //Valeurs.
+        private Carte[] paquet = new Carte[52];
+        //Pointe sur le dessus de la pile.
+        private int top;
+
+        //Retourne la valeur D'UNE carte dans le paquet.
+        public Carte GetCarte(int i)
         {
             return paquet[i];
         }
+
+        public Carte[] GetPaquet()
+        {
+            return paquet;
+        }
         public Paquet()
+        {
+            Carte[] paquet = new Carte[52];
+        }
+        //Remplit le paquet de toutes les cartes.
+        public void Remplir()
         {
             paquet[0] = asCoeur;
             paquet[1] = deuxCoeur;
@@ -128,9 +140,75 @@ namespace TP1_OO
             paquet[49] = valetPique;
             paquet[50] = damePique;
             paquet[51] = roiPique;
-
+            top = 51;
         }
 
+        public void DistribuerCartes(Joueur joueur, Joueur joueur2)
+        {
+            for(int i = 0; i < 16; i++)
+            {
+                if(i < 8)
+                {
+                    joueur.PushCard(paquet[top]);
+                    
+                }
+                else
+                {
+                    joueur2.PushCard(paquet[top]);
+                }
+                paquet[top] = null;
+                top--;
+            }
+            
+        }
+
+        public void DistribuerCartes(Joueur joueur, Joueur joueur2, Joueur joueur3)
+        {
+            for (int i = 0; i < 24; i++)
+            {
+                if (i < 8)
+                {
+                    joueur.PushCard(paquet[top]);
+                }
+                else if(i >= 8 && i < 16)
+                {
+                    joueur2.PushCard(paquet[top]);
+                }
+                else
+                {
+                    joueur3.PushCard(paquet[top]);
+                }
+                top--;
+            }
+        }
+
+        public void DistribuerCartes(Joueur joueur, Joueur joueur2, Joueur joueur3, Joueur joueur4)
+        {
+            for (int i = 0; i < 32; i++)
+            {
+                if (i < 8)
+                {
+                    joueur.PushCard(paquet[top]);
+                }
+                else if (i >= 8 && i < 16)
+                {
+                    joueur2.PushCard(paquet[top]);
+                }
+                else if(i >= 16 && i < 24)
+                {
+                    joueur3.PushCard(paquet[top]);
+                }
+                top--;
+            }
+        }
+
+        public void Vider()
+        {
+            for(int i = 0; i < 51; i++)
+            {
+                paquet[i] = null;
+            }
+        }
 
         //Brasser les cartes
         public void Brasser(int _nbFois)
@@ -139,7 +217,8 @@ namespace TP1_OO
 
             Random random = new Random();
             Random random2 = new Random();
-
+            Carte[] paquetTemp = new Carte[1];
+            Carte[] paquetTemp2 = new Carte[1];
 
 
             // va swap entre deux cases aléatoire de l'array.
@@ -155,5 +234,6 @@ namespace TP1_OO
                 paquet[randNum] = paquetTemp2[0];
             }
         }
+      
     }
 }
