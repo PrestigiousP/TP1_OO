@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 
@@ -8,7 +9,6 @@ namespace TP1_OO
     {
         static void Main(string[] args)
         {
-
             MenuPrincipal();
 
 
@@ -67,7 +67,14 @@ namespace TP1_OO
                         {
                             case 1:
                                 //ajouter deux joueurs.
-                                Test();
+                                Joueur phil = new Joueur("Phil", "Bail");
+                                Joueur steph = new Joueur("Steph", "Gagnon");
+                                List<Joueur> listeJoueurs = new List<Joueur>();
+                                listeJoueurs.Add(phil);
+                                listeJoueurs.Add(steph);
+                                Partie partie = new Partie();
+                                partie.startPartie(listeJoueurs);
+                                //Test();
                                 break;
                             case 2:
                                 //ajouter trois joueurs.
@@ -93,40 +100,7 @@ namespace TP1_OO
             }
             static void Test()
             {
-                //Instanciation pour les tests, a enlever apres.
-                Joueur phil = new Joueur("Phil", "Bail");
-                Joueur steph = new Joueur("Steph", "Gagnon");
-                PaquetPioche paquetP = new PaquetPioche();
-
-
-                Paquet paquet = new Paquet();
-                //Rempli le paquet de cartes de toutes les cartes du jeu. 
-                paquet.Remplir();
-               /* for(int i = 0; i < 52; i++)
-                {*/
-                   //Console.WriteLine(paquet.getCarte(i));
-                    paquet.Brasser(1000);
-                   // Console.WriteLine(paquet.getCarte(i));
-                //}
-                //Distribue les cartes aux joueurs.
-                paquet.DistribuerCartes(phil, steph);
-                /*Console.WriteLine(phil.GetMain());
-                Console.WriteLine(steph.GetMain());*/
-                //Envoi les cartes a la fonction RemplirPioche qui remplit le paquetP.
-                paquetP.RemplirPioche(paquet.GetPaquet());
-                //Vide le paquet. 
-                paquet.Vider();
-                for (int i = 0; i < 52; i++)
-                {
-                    Console.WriteLine(paquet.GetCarte(i));
-                   // Console.WriteLine(paquetP.GetCarte(i));
-                }
-                Console.WriteLine("-------------------------------------------------");
-                for (int i = 0; i < 52; i++)
-                {
-                    //Console.WriteLine(paquet.GetCarte(i));
-                    Console.WriteLine(paquetP.GetCarte(i));
-                }
+               
             }
         }
     }

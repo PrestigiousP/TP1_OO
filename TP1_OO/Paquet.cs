@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -72,9 +73,19 @@ namespace TP1_OO
         private int top;
 
         //Retourne la valeur D'UNE carte dans le paquet.
-        public Carte GetCarte(int i)
+        public Carte GetCarte()
         {
-            return paquet[i];
+            if(top > -1)
+            {
+                Carte carte = paquet[top];
+                paquet[top] = null;
+                top--;
+                return carte;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Carte[] GetPaquet()
@@ -142,63 +153,20 @@ namespace TP1_OO
             paquet[51] = roiPique;
             top = 51;
         }
-
-        public void DistribuerCartes(Joueur joueur, Joueur joueur2)
+        public void DistribuerCartes(List<Joueur> listeJoueurs)
         {
-            for(int i = 0; i < 16; i++)
+            int nbJoueurs;
+            int joueur = 0;
+            nbJoueurs = listeJoueurs.Count;
+            while(joueur != nbJoueurs)
             {
-                if(i < 8)
+                for (int i = 0; i < 8; i++)
                 {
-                    joueur.PushCard(paquet[top]);
-                    
+                    listeJoueurs.ElementAt(joueur).PushCard(paquet[top]);
+                    paquet[top] = null;
+                    top--;
                 }
-                else
-                {
-                    joueur2.PushCard(paquet[top]);
-                }
-                paquet[top] = null;
-                top--;
-            }
-            
-        }
-
-        public void DistribuerCartes(Joueur joueur, Joueur joueur2, Joueur joueur3)
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                if (i < 8)
-                {
-                    joueur.PushCard(paquet[top]);
-                }
-                else if(i >= 8 && i < 16)
-                {
-                    joueur2.PushCard(paquet[top]);
-                }
-                else
-                {
-                    joueur3.PushCard(paquet[top]);
-                }
-                top--;
-            }
-        }
-
-        public void DistribuerCartes(Joueur joueur, Joueur joueur2, Joueur joueur3, Joueur joueur4)
-        {
-            for (int i = 0; i < 32; i++)
-            {
-                if (i < 8)
-                {
-                    joueur.PushCard(paquet[top]);
-                }
-                else if (i >= 8 && i < 16)
-                {
-                    joueur2.PushCard(paquet[top]);
-                }
-                else if(i >= 16 && i < 24)
-                {
-                    joueur3.PushCard(paquet[top]);
-                }
-                top--;
+                joueur++;
             }
         }
 

@@ -17,34 +17,21 @@ namespace TP1_OO
         //Ceci va devoir etre teste.
         public void RemplirPioche(Carte[] cartes)
         {
-            /*Carte[] paquetCartes = new Carte[52];
-            for (int i = 0; i < 51; i++)
-            {
-                paquetCartes = paquet.GetPaquet();
-            }   */
-           // int j = 0;
             for (int i = 0; i < 52; i++)
             {
                 paquetPioche[i] = cartes[i];
-                //j++;
                 top++;
             }
         }
 
-        //Retourne la valeur D'UNE carte dans le paquet.
-       new public Carte GetCarte(int i)
-       {
-            return paquetPioche[i];
-       }
-
-        public Carte Pop()
+        /*public Carte GetCarte()
         {
            Carte carteTemp;
            carteTemp = paquetPioche[top];
            paquetPioche[top] = null;
            top--;
             return carteTemp;
-        }
+        }*/
 
     }
 }

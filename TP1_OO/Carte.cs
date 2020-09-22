@@ -36,7 +36,6 @@ namespace TP1_OO
         {
             return couleur;
         }
-
         
        override public string ToString()
         {
@@ -103,7 +102,6 @@ namespace TP1_OO
             }
             name = val + " de " + coul;
             return name;
-            //Console.WriteLine()
 
         }
 
