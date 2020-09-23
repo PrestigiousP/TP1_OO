@@ -1,40 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace TP1_OO
 {
     class Joueur
     {
+       
         private string nom;
         private string pnom;
         private List<Carte> main = new List<Carte>();
-        PaquetDepot paquetDepot = new PaquetDepot();
+        PaquetDepot paquetD;
+        PaquetPioche paquetP;
 
-        public Joueur(string nom, string pnom)
+        public Joueur(string nom, string pnom, PaquetDepot paquetD, PaquetPioche paquetP)
         {
             this.nom = nom;
             this.pnom = pnom;
+            this.paquetD = paquetD;
+            this.paquetP = paquetP;
+           // nbJoueurs++;
         }
 
         public void JouerCarte(int index)
         {
             Carte carte = main.ElementAt(index);
+            paquetD.DeposerCarte(carte);
             main.RemoveAt(index);
-            Console.WriteLine(carte.ToString());
-            //A voir pourquoi il y a une erreur.
-            paquetDepot.DeposerCarte(carte);
+        }
+
+        public Carte GetCarte(int index)
+        {
+            Carte carte = main.ElementAt(index);
+            return carte;
         }
         public void PushCard(Carte carte)
         {
             main.Add(carte);
         }
 
-        public void pullCard(Carte carte)
+        /*public void pullCard(Carte carte)
         {
-            this.main.Add(carte);
-        }
+            main.Add(carte);
+        }*/
 
         public int NbCartes()
         {
@@ -47,10 +57,10 @@ namespace TP1_OO
             return nomComplet;
         }
 
-        public String GetMain()
+        public string GetMain()
         {
             String strMain = "";
-            for (int i = 0; i < main.Capacity; i++)
+            for (int i = 0; i < main.Count; i++)
             {
                 strMain += this.main[i].ToString() + " en position " + i + "\n";
             }

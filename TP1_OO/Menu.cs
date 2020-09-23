@@ -66,15 +66,19 @@ namespace TP1_OO
                         switch (choix)
                         {
                             case 1:
-                                //ajouter deux joueurs.
-                                Joueur phil = new Joueur("Phil", "Bail");
-                                Joueur steph = new Joueur("Steph", "Gagnon");
+                                //Sert seulement a tester l'app.
+                                PaquetPioche paquetP = new PaquetPioche();
+                                PaquetDepot paquetD = new PaquetDepot();
+                                Paquet paquet = new Paquet();
+                                Joueur phil = new Joueur("Phil", "Bail", paquetD, paquetP);
+                                Joueur steph = new Joueur("Steph", "Gagnon", paquetD, paquetP);
                                 List<Joueur> listeJoueurs = new List<Joueur>();
                                 listeJoueurs.Add(phil);
                                 listeJoueurs.Add(steph);
                                 Partie partie = new Partie();
-                                partie.startPartie(listeJoueurs);
-                                //Test();
+                                
+                                partie.startPartie(listeJoueurs, paquetD, paquetP, paquet);
+                                Test();
                                 break;
                             case 2:
                                 //ajouter trois joueurs.

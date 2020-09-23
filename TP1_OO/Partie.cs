@@ -10,22 +10,14 @@ namespace TP1_OO
 
     class Partie
     {
-        private Stack<Carte> pile = new Stack<Carte>();
-        private Paquet paquet = new Paquet();
-
-
-        private List<Joueur> listeJoueurs = new List<Joueur>();
-        private int nbPersonnes;
 
         //regroupement des methodes pour initialiser une partie
-        public void startPartie(List<Joueur> listeJoueurs)
+        public void startPartie(List<Joueur> listeJoueurs, PaquetDepot paquetD, PaquetPioche paquetP, Paquet paquet)
         {
             //Instanciation pour les tests, a enlever apres.
             Joueur premierJoueur;
             int nbJoueurs = listeJoueurs.Count;
-            PaquetPioche paquetP = new PaquetPioche();
-            PaquetDepot paquetD = new PaquetDepot();
-            Paquet paquet = new Paquet();
+   
             //Rempli le paquet de cartes de toutes les cartes du jeu. 
             paquet.Remplir();
       
@@ -60,21 +52,65 @@ namespace TP1_OO
             bool gameover = false;
             while (!gameover)
             {
-                joueur = listeJoueurs.ElementAt(index);
-                Console.WriteLine("C'est le tour a " + joueur.ToString());
-                Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte());      
-                Console.WriteLine("Voici votre paquet: \n" + joueur.GetMain());
-                Console.WriteLine("Entrez le numéro de carte que vous voulez jouer.");
-                try
+                if(index == listeJoueurs.Count)
                 {
-                   carteChoisi = Int32.Parse(Console.ReadLine());
-                   joueur.JouerCarte(carteChoisi);
+                    index = 0;
                 }
-                catch(Exception e)
+                else
                 {
-                    Console.WriteLine(e.Message);
+                    try
+                    {
+                        joueur = listeJoueurs.ElementAt(index);
+                        Console.WriteLine("\nC'est le tour a " + joueur.ToString() + "\n");
+                        Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte().ToString());
+                        Console.WriteLine("Voici votre paquet: \n" + joueur.GetMain());
+                        Console.WriteLine("Entrez le numéro de carte que vous voulez jouer.");
+                        carteChoisi = Int32.Parse(Console.ReadLine());
+
+                        index = VerifierCarte(joueur, carteChoisi, index, paquetD);
+                        gameover = VerifierGagnant(listeJoueurs);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("J'ai attrapé l'erreur ici");
+                        Console.WriteLine(e.Message);
+                    }
                 }
             }
+        }
+
+        public static int VerifierCarte(Joueur joueur, int carteChoisi, int index, PaquetDepot paquetD)
+        {
+            if(joueur.GetCarte(carteChoisi).GetCouleur() == paquetD.VoirCarte().GetCouleur() || 
+                joueur.GetCarte(carteChoisi).GetValeur() == paquetD.VoirCarte().GetValeur())
+            {
+                joueur.JouerCarte(carteChoisi);
+                index++;
+                return index;
+            }
+            else
+            {
+                Console.WriteLine("Vous ne pouvez pas jouer cette carte.");
+                return index;
+            }
+        }
+
+        public static bool VerifierGagnant(List<Joueur> listeJoueurs)
+        {
+            bool gameover = false;
+            foreach(Joueur joueur in listeJoueurs)
+            {
+                if(joueur.NbCartes() == 0)
+                {
+                    gameover = true;
+                    return gameover;
+                }
+                else
+                {
+                    return gameover;
+                }
+            }
+            return gameover;
         }
 
         public Joueur JoueurDepart(List<Joueur> listeJoueurs, int nbJoueurs)

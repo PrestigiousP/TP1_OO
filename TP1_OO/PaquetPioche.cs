@@ -11,7 +11,7 @@ namespace TP1_OO
         public PaquetPioche() : base()
         {
             Carte[] paquetPioche = new Carte[52];
-            top = 0;
+            top = -1;
         }
 
         //Ceci va devoir etre teste.

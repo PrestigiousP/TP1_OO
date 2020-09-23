@@ -27,12 +27,12 @@ namespace TP1_OO
             this.couleur = couleur;
         }
         
-       public int getValeur()
+       public int GetValeur()
         {
             return valeur;
         }
 
-       public Couleur getCouleur()
+       public Couleur GetCouleur()
         {
             return couleur;
         }

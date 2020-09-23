@@ -13,19 +13,22 @@ namespace TP1_OO
             Carte[] paquetDepot = new Carte[52];
             top = -1;
         }
-
-        public string VoirCarte()
+       
+       /* new public Carte GetCarte()
         {
-            string nomCarte;
             Carte carte = paquetDepot[top];
-            nomCarte = carte.ToString();
-            return nomCarte;
+            return carte;
+        }*/
+
+        public Carte VoirCarte()
+        {
+            Carte carte = paquetDepot[top];
+            return carte;
         }
 
         public void DeposerCarte(Carte carte)
         {
             paquetDepot[++top] = carte;
-            //top++;
         }
 
     }
