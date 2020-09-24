@@ -13,12 +13,7 @@ namespace TP1_OO
             Carte[] paquetDepot = new Carte[52];
             top = -1;
         }
-       
-       /* new public Carte GetCarte()
-        {
-            Carte carte = paquetDepot[top];
-            return carte;
-        }*/
+      
 
         public Carte VoirCarte()
         {

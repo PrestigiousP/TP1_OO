@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TP1_OO
@@ -14,24 +15,32 @@ namespace TP1_OO
             top = -1;
         }
 
+        new public Carte GetCarte()
+        {
+            int test = top;
+            Carte carte = paquetPioche[top];
+            paquetPioche[top] = null;
+            top--;
+            return carte;
+
+        }
+
         //Ceci va devoir etre teste.
         public void RemplirPioche(Carte[] cartes)
         {
             for (int i = 0; i < 52; i++)
             {
-                paquetPioche[i] = cartes[i];
-                top++;
+                if (cartes[i] == null)
+                {
+                    return;
+                }
+                else
+                {
+                    paquetPioche[i] = cartes[i];
+                    top++;
+                }
             }
         }
-
-        /*public Carte GetCarte()
-        {
-           Carte carteTemp;
-           carteTemp = paquetPioche[top];
-           paquetPioche[top] = null;
-           top--;
-            return carteTemp;
-        }*/
 
     }
 }

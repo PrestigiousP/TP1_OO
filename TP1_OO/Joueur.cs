@@ -12,8 +12,8 @@ namespace TP1_OO
         private string nom;
         private string pnom;
         private List<Carte> main = new List<Carte>();
-        PaquetDepot paquetD;
-        PaquetPioche paquetP;
+        private PaquetDepot paquetD;
+        private PaquetPioche paquetP;
 
         public Joueur(string nom, string pnom, PaquetDepot paquetD, PaquetPioche paquetP)
         {
@@ -21,7 +21,6 @@ namespace TP1_OO
             this.pnom = pnom;
             this.paquetD = paquetD;
             this.paquetP = paquetP;
-           // nbJoueurs++;
         }
 
         public void JouerCarte(int index)
@@ -41,6 +40,10 @@ namespace TP1_OO
             main.Add(carte);
         }
 
+        public void PushCard(PaquetPioche paquetP)
+        {
+            main.Add(paquetP.GetCarte());
+        }
         /*public void pullCard(Carte carte)
         {
             main.Add(carte);
@@ -59,12 +62,11 @@ namespace TP1_OO
 
         public string GetMain()
         {
-            String strMain = "";
-            for (int i = 0; i < main.Count; i++)
+            string strMain = "";
+            for (int i = 0;  i < main.Count; i++)
             {
                 strMain += this.main[i].ToString() + " en position " + i + "\n";
             }
-
             return strMain;
         }
     }

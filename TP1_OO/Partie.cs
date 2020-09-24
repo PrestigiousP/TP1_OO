@@ -49,31 +49,45 @@ namespace TP1_OO
             int index = listeJoueurs.IndexOf(premierJoueur);
             Joueur joueur;
             int carteChoisi;
+            int indexTemp;
             bool gameover = false;
             while (!gameover)
             {
                 if(index == listeJoueurs.Count)
                 {
                     index = 0;
+                    
                 }
                 else
                 {
                     try
                     {
+                        indexTemp = index;
                         joueur = listeJoueurs.ElementAt(index);
-                        Console.WriteLine("\nC'est le tour a " + joueur.ToString() + "\n");
+                        Console.WriteLine("\nC'est le tour à " + joueur.ToString() + "\n");
                         Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte().ToString());
                         Console.WriteLine("Voici votre paquet: \n" + joueur.GetMain());
-                        Console.WriteLine("Entrez le numéro de carte que vous voulez jouer.");
-                        carteChoisi = Int32.Parse(Console.ReadLine());
-
-                        index = VerifierCarte(joueur, carteChoisi, index, paquetD);
+                        Console.WriteLine("Entrez " + joueur.NbCartes() + " pour piger.");
+                        Console.WriteLine("Entrez un chiffre pour jouer.");
+                        while (indexTemp == index) 
+                        {
+                            carteChoisi = Int32.Parse(Console.ReadLine());
+                            if(carteChoisi == joueur.NbCartes())
+                            {
+                               joueur.PushCard(paquetP.GetCarte());
+                               index++;
+                            }
+                            else
+                            {
+                                index = VerifierCarte(joueur, carteChoisi, index, paquetD);
+                            }
+                        }
                         gameover = VerifierGagnant(listeJoueurs);
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine("J'ai attrapé l'erreur ici");
-                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.ToString());
                     }
                 }
             }

@@ -75,17 +75,11 @@ namespace TP1_OO
         //Retourne la valeur D'UNE carte dans le paquet.
         public Carte GetCarte()
         {
-            if(top > -1)
-            {
-                Carte carte = paquet[top];
-                paquet[top] = null;
-                top--;
-                return carte;
-            }
-            else
-            {
-                return null;
-            }
+            Carte carte = paquet[top];
+            paquet[top] = null;
+            top--;
+            return carte;
+            
         }
 
         public Carte[] GetPaquet()
@@ -95,6 +89,7 @@ namespace TP1_OO
         public Paquet()
         {
             Carte[] paquet = new Carte[52];
+            top = -1;
         }
         //Remplit le paquet de toutes les cartes.
         public void Remplir()
