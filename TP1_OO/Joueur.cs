@@ -42,6 +42,7 @@ namespace TP1_OO
 
         public void PushCard(PaquetPioche paquetP)
         {
+
             main.Add(paquetP.GetCarte());
         }
         /*public void pullCard(Carte carte)
@@ -65,7 +66,7 @@ namespace TP1_OO
             string strMain = "";
             for (int i = 0;  i < main.Count; i++)
             {
-                strMain += this.main[i].ToString() + " en position " + i + "\n";
+                strMain += this.main[i].ToString() + ", position " + i + "\n";
             }
             return strMain;
         }

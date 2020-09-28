@@ -72,9 +72,13 @@ namespace TP1_OO
                                 Paquet paquet = new Paquet();
                                 Joueur phil = new Joueur("Phil", "Bail", paquetD, paquetP);
                                 Joueur steph = new Joueur("Steph", "Gagnon", paquetD, paquetP);
+                                Joueur test = new Joueur("bob", "bob", paquetD, paquetP);
+                                Joueur hihi = new Joueur("hihi", "hihi", paquetD, paquetP);
                                 List<Joueur> listeJoueurs = new List<Joueur>();
                                 listeJoueurs.Add(phil);
                                 listeJoueurs.Add(steph);
+                                listeJoueurs.Add(hihi);
+                                listeJoueurs.Add(test);
                                 Partie partie = new Partie();
                                 
                                 partie.startPartie(listeJoueurs, paquetD, paquetP, paquet);

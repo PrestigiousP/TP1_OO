@@ -17,12 +17,10 @@ namespace TP1_OO
 
         new public Carte GetCarte()
         {
-            int test = top;
             Carte carte = paquetPioche[top];
             paquetPioche[top] = null;
             top--;
             return carte;
-
         }
 
         //Ceci va devoir etre teste.
