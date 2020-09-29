@@ -151,17 +151,17 @@ namespace TP1_OO
         public void DistribuerCartes(List<Joueur> listeJoueurs)
         {
             int nbJoueurs;
-            int joueur = 0;
+            int index = 0;
             nbJoueurs = listeJoueurs.Count;
-            while(joueur != nbJoueurs)
+            while(index != nbJoueurs)
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    listeJoueurs.ElementAt(joueur).PushCard(paquet[top]);
+                    listeJoueurs.ElementAt(index).PushCard(paquet[top]);
                     paquet[top] = null;
                     top--;
                 }
-                joueur++;
+                index++;
             }
         }
 

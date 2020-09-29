@@ -74,15 +74,21 @@ namespace TP1_OO
                                 Joueur steph = new Joueur("Steph", "Gagnon", paquetD, paquetP);
                                 Joueur test = new Joueur("bob", "bob", paquetD, paquetP);
                                 Joueur hihi = new Joueur("hihi", "hihi", paquetD, paquetP);
+                                Joueur caca = new Joueur("hoho", "haha", paquetD, paquetP);
+                                Joueur toto = new Joueur("toto", "toto", paquetD, paquetP);
+
                                 List<Joueur> listeJoueurs = new List<Joueur>();
                                 listeJoueurs.Add(phil);
                                 listeJoueurs.Add(steph);
                                 listeJoueurs.Add(hihi);
                                 listeJoueurs.Add(test);
+                                listeJoueurs.Add(toto);
+                                listeJoueurs.Add(caca);
+                                //listeJoueurs.Add(toto);
                                 Partie partie = new Partie();
                                 
                                 partie.startPartie(listeJoueurs, paquetD, paquetP, paquet);
-                                Test();
+                                //Test();
                                 break;
                             case 2:
                                 //ajouter trois joueurs.
@@ -101,15 +107,16 @@ namespace TP1_OO
                     catch (Exception e)
                     {
                         //incomplet
+                        Console.WriteLine("erreur attrapé dans le menu");
                         Console.WriteLine(e);
                     }
                 }
 
             }
-            static void Test()
+            /*static void Test()
             {
                
-            }
+            }*/
         }
     }
 }

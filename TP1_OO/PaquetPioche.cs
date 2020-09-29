@@ -15,12 +15,43 @@ namespace TP1_OO
             top = -1;
         }
 
-        new public Carte GetCarte()
+        public int GetNbCartes()
         {
+            int count = 0;
+            for(int i =0; i < 52; i++)
+            {
+                if(paquetPioche[i] == null)
+                {
+                    break;
+                    //count++;
+                }
+                else
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        new public Carte GetCarte()
+        { 
+            if(top == -1)
+            {
+                return null;
+            }
             Carte carte = paquetPioche[top];
             paquetPioche[top] = null;
             top--;
             return carte;
+        }
+
+        public void TransfererPaquet(Carte[] cartes, int top1)
+        {
+            for (int i = 0; i < top1; i++)
+            {
+                paquetPioche[i] = cartes[i];
+                top++;
+            }
         }
 
         //Ceci va devoir etre teste.

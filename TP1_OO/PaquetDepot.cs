@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace TP1_OO
@@ -14,6 +15,22 @@ namespace TP1_OO
             top = -1;
         }
       
+        new public Carte[] GetPaquet()
+        {
+            return paquetDepot;
+        }
+        /*public void RebrasserCartes()
+        {
+            for(int i = top-1; i > -1; i--)
+            {
+                paquetDepot[i] = 
+            }
+        }*/
+
+        public int GetTop()
+        {
+            return top;
+        }
 
         public Carte VoirCarte()
         {

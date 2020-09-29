@@ -61,7 +61,12 @@ namespace TP1_OO
             {
                 try
                 {
-
+                    /*int test2 = 0;
+                    for (int i = 0; i < listeJoueurs.Count; i++)
+                    {
+                        test2 += listeJoueurs.ElementAt(i).NbCartes();
+                    }*/
+                    int test = paquetD.GetTop();
                     verification = true;
                     joueur = listeJoueurs.ElementAt(index);
                     Console.WriteLine("\nC'est le tour à " + joueur.ToString() + "\n");
@@ -73,9 +78,9 @@ namespace TP1_OO
                     {
                         carteChoisi = Int32.Parse(Console.ReadLine());
                         if (carteChoisi == joueur.NbCartes())
-                        {
-                            joueur.PushCard(paquetP.GetCarte());
-                            verification = false;
+                        {                       
+
+                            verification = GererPiocheVide(paquetP, paquetD, listeJoueurs, joueur);
                         }
                         else
                         {
@@ -84,6 +89,7 @@ namespace TP1_OO
                     }
                     if (!(carteChoisi == joueur.NbCartes()-1))
                     {
+
 
                         int val = joueur.GetCarte(carteChoisi).GetValeur();
                         joueur.JouerCarte(carteChoisi);
@@ -96,11 +102,19 @@ namespace TP1_OO
                                 index = Tour(listeJoueurs, sens, saut, index);
                                 break;
                             case 7:
-                                Console.WriteLine("Le prochain joueur pige deux cartes. ");
+                               
                                 index = Tour(listeJoueurs, sens, saut, index);
                                 Joueur joueur2 = listeJoueurs.ElementAt(index);
-                                joueur2.PushCard(paquetP.GetCarte());
-                                joueur2.PushCard(paquetP.GetCarte());
+                                if(paquetP.GetNbCartes() >= 2)
+                                {
+                                    Console.WriteLine("Le prochain joueur pige deux cartes. ");
+                                    joueur2.PushCard(paquetP.GetCarte());
+                                    joueur2.PushCard(paquetP.GetCarte());
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Le prochain joueur ne peut pas piger deux cartes.");
+                                }
                                 break; 
                             case 10:
                                 Console.WriteLine("Inversement de sens.");
@@ -111,14 +125,12 @@ namespace TP1_OO
                                 index = Tour(listeJoueurs, sens, saut, index);
                                 break;
                         }
-                        //index = Tour(listeJoueurs, sens, saut, index);
                     }
                     else
                     {
                         index = Tour(listeJoueurs, sens, saut, index);
                     }
-
-                    //Tour(listeJoueurs, sens, saut);
+                    
                     gameover = VerifierGagnant(listeJoueurs);
                 }
                 catch (Exception e)
@@ -127,6 +139,34 @@ namespace TP1_OO
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        public static bool GererPiocheVide(PaquetPioche paquetP, PaquetDepot paquetD, List<Joueur> listeJoueurs, Joueur joueur)
+        {
+
+            if(paquetD.GetTop() > 0 && paquetP.GetNbCartes() == 0)
+            {
+                Console.WriteLine("Le paquet est vide. Il va donc être rebrassé.");
+                    Carte[] cartes = paquetD.GetPaquet();
+                    int top = paquetD.GetTop();
+                    paquetP.TransfererPaquet(cartes, top);
+                paquetP.Brasser(1000);
+                joueur.PushCard(paquetP.GetCarte());//test
+                return false;
+
+            }
+            else if(paquetD.GetTop() == 0 && paquetP.GetNbCartes() == 0)
+            {
+                Console.WriteLine("Vous ne pouvez pas piger de carte.");
+                return true;
+            }
+            else if(paquetP.GetNbCartes() > 0)
+            {
+                joueur.PushCard(paquetP.GetCarte());
+                return false;
+            }
+            return true;
+          
         }
 
         public static int OutOfBound(List<Joueur> listeJoueurs, int index)
