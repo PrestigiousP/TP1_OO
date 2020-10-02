@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 
@@ -8,7 +9,6 @@ namespace TP1_OO
     {
         static void Main(string[] args)
         {
-
             MenuPrincipal();
 
             //lolipop
@@ -66,8 +66,29 @@ namespace TP1_OO
                         switch (choix)
                         {
                             case 1:
-                                //ajouter deux joueurs.
-                                Test();
+                                //Sert seulement a tester l'app.
+                                PaquetPioche paquetP = new PaquetPioche();
+                                PaquetDepot paquetD = new PaquetDepot();
+                                Paquet paquet = new Paquet();
+                                Joueur phil = new Joueur("Phil", "Bail", paquetD, paquetP);
+                                Joueur steph = new Joueur("Steph", "Gagnon", paquetD, paquetP);
+                                Joueur test = new Joueur("bob", "bob", paquetD, paquetP);
+                                Joueur hihi = new Joueur("hihi", "hihi", paquetD, paquetP);
+                                Joueur caca = new Joueur("hoho", "haha", paquetD, paquetP);
+                                Joueur toto = new Joueur("toto", "toto", paquetD, paquetP);
+
+                                List<Joueur> listeJoueurs = new List<Joueur>();
+                                listeJoueurs.Add(phil);
+                                listeJoueurs.Add(steph);
+                                listeJoueurs.Add(hihi);
+                                listeJoueurs.Add(test);
+                                listeJoueurs.Add(toto);
+                                listeJoueurs.Add(caca);
+                                //listeJoueurs.Add(toto);
+                                Partie partie = new Partie();
+                                
+                                partie.startPartie(listeJoueurs, paquetD, paquetP, paquet);
+                                //Test();
                                 break;
                             case 2:
                                 //ajouter trois joueurs.
@@ -86,21 +107,16 @@ namespace TP1_OO
                     catch (Exception e)
                     {
                         //incomplet
+                        Console.WriteLine("erreur attrapé dans le menu");
                         Console.WriteLine(e);
                     }
                 }
 
             }
-            static void Test()
+            /*static void Test()
             {
-                Paquet paquet = new Paquet();
-                for(int i = 0; i < 52; i++)
-                {
-                   //Console.WriteLine(paquet.getCarte(i));
-                    paquet.Brasser(1000);
-                    Console.WriteLine(paquet.getCarte(i));
-                }
-            }
+               
+            }*/
         }
     }
 }
