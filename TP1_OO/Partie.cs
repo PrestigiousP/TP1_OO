@@ -52,6 +52,7 @@ namespace TP1_OO
         {
             int index = listeJoueurs.IndexOf(joueur);
             //Joueur joueur;
+            string couleur = "";
             int carteChoisi = 0;
             int sens = 1;
             int saut = 0;
@@ -61,16 +62,18 @@ namespace TP1_OO
             {
                 try
                 {
-                    /*int test2 = 0;
-                    for (int i = 0; i < listeJoueurs.Count; i++)
-                    {
-                        test2 += listeJoueurs.ElementAt(i).NbCartes();
-                    }*/
                     int test = paquetD.GetTop();
                     verification = true;
                     joueur = listeJoueurs.ElementAt(index);
                     Console.WriteLine("\nC'est le tour à " + joueur.ToString() + "\n");
-                    Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte().ToString());
+                    if(couleur != "")
+                    {
+                        Console.WriteLine("Joueur une carte de couleur " + couleur);
+                    }
+                    else
+                    {
+                        Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte().ToString());
+                    }
                     Console.WriteLine("Voici votre paquet: \n" + joueur.GetMain());
                     Console.WriteLine("Entrez " + joueur.NbCartes() + " pour piger.");
                     Console.WriteLine("Entrez un chiffre pour jouer.");
@@ -84,7 +87,7 @@ namespace TP1_OO
                         }
                         else
                         {
-                            verification = VerifierCarte(joueur, carteChoisi, paquetD, paquetP);
+                            verification = VerifierCarte(joueur, carteChoisi, paquetD, paquetP, couleur);
                         }
                     }
                     if (!(carteChoisi == joueur.NbCartes()-1))
@@ -121,6 +124,10 @@ namespace TP1_OO
                                 sens = -1;
                                 index = Tour(listeJoueurs, sens, saut, index);
                                 break;
+                            case 11:
+                                couleur =  ChangementCouleur(couleur);
+                                index = Tour(listeJoueurs, sens, saut, index);
+                                break;
                             default:
                                 index = Tour(listeJoueurs, sens, saut, index);
                                 break;
@@ -139,6 +146,47 @@ namespace TP1_OO
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        public static string ChangementCouleur(string changementCouleur)
+        {
+            Console.WriteLine("Entrez la nouvelle Couleur (trefle, carreau, coeur, pique).");
+            try
+            {
+               bool sortir = true;
+                while (sortir)
+                {
+                    changementCouleur = Console.ReadLine();
+                    switch (changementCouleur)
+                    {
+                        case "trefle":
+                            Console.WriteLine("La couleur choisi est trefle.");
+                            sortir = false;
+                            break;
+                        case "carreau":
+                            Console.WriteLine("La couleur choisi est carreau.");
+                            sortir = false;
+                            break;
+                        case "coeur":
+                            Console.WriteLine("La couleur choisi est coeur.");
+                            sortir = false;
+                            break;
+                        case "pique":
+                            Console.WriteLine("La couleur choisi est pique.");
+                            sortir = false;
+                            break;
+                        default:
+                            Console.WriteLine("Ce n'est pas une couleur.");
+                            sortir = true;
+                            break;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return changementCouleur;
         }
 
         public static bool GererPiocheVide(PaquetPioche paquetP, PaquetDepot paquetD, List<Joueur> listeJoueurs, Joueur joueur)
@@ -216,8 +264,13 @@ namespace TP1_OO
             return index;
         }
 
-        public static bool VerifierCarte(Joueur joueur, int carteChoisi, PaquetDepot paquetD, PaquetPioche paquetP)
+        public static bool VerifierCarte(Joueur joueur, int carteChoisi, PaquetDepot paquetD, PaquetPioche paquetP, string couleur)
         {
+            if(couleur != "")
+            {
+                //if(joueur.GetCarte(carteChoisi).GetCouleur() )
+            }
+
             if (joueur.GetCarte(carteChoisi).GetCouleur() == paquetD.VoirCarte().GetCouleur() ||
                 joueur.GetCarte(carteChoisi).GetValeur() == paquetD.VoirCarte().GetValeur())
             {
