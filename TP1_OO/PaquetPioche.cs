@@ -52,6 +52,7 @@ namespace TP1_OO
                 paquetPioche[i] = cartes[i];
                 top++;
             }
+            int test = top;
         }
 
         //Ceci va devoir etre teste.

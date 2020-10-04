@@ -8,7 +8,6 @@ namespace TP1_OO
 {
     class Joueur
     {
-       
         private string nom;
         private string pnom;
         private List<Carte> main = new List<Carte>();
@@ -23,11 +22,35 @@ namespace TP1_OO
             this.paquetP = paquetP;
         }
 
-        public void JouerCarte(int index)
+        public void SetNom(string s)
         {
-            Carte carte = main.ElementAt(index);
+            nom = s;
+        }
+
+        public void SetPnom(string s)
+        {
+            pnom = s;
+        }
+
+        public bool Gagnant()
+        {
+            if(main.Count == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void JouerCarte(Carte carte)
+        {
+            for(int i = 0; i < main.Count; i++)
+            {
+                if(carte == main.ElementAt(i))
+                {
+                    main.RemoveAt(i);
+                }
+            }
             paquetD.DeposerCarte(carte);
-            main.RemoveAt(index);
         }
 
         public Carte GetCarte(int index)
@@ -35,20 +58,10 @@ namespace TP1_OO
             Carte carte = main.ElementAt(index);
             return carte;
         }
-        public void PushCard(Carte carte)
+        public void Pige(Carte carte)
         {
             main.Add(carte);
         }
-
-        public void PushCard(PaquetPioche paquetP)
-        {
-
-            main.Add(paquetP.GetCarte());
-        }
-        /*public void pullCard(Carte carte)
-        {
-            main.Add(carte);
-        }*/
 
         public int NbCartes()
         {

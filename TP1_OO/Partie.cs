@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Security;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TP1_OO
 {
@@ -13,7 +15,7 @@ namespace TP1_OO
     class Partie
     {
         //regroupement des methodes pour initialiser une partie
-        public void startPartie(List<Joueur> listeJoueurs, PaquetDepot paquetD, PaquetPioche paquetP, Paquet paquet)
+        public async Task startPartie(List<Joueur> listeJoueurs, PaquetDepot paquetD, PaquetPioche paquetP, Paquet paquet)
         {
             //Instanciation pour les tests, a enlever apres.
             Joueur joueur;
@@ -24,12 +26,12 @@ namespace TP1_OO
             paquet.Remplir();
       
             //Brasse les cartes.
-            paquet.Brasser(1000);
+            paquet.Brasser(10000);
          
             //Distribue les cartes aux joueurs.
             paquet.DistribuerCartes(listeJoueurs);
 
-            //Retourne une carte de départ sur de paquet de Dépot.
+            //Retourne une carte de départ sur le paquet de Dépot.
             paquetD.DeposerCarte(paquet.GetCarte());
 
             //Envoi les cartes a la fonction RemplirPioche qui remplit le paquetP.
@@ -47,266 +49,161 @@ namespace TP1_OO
       
 
         }
-
-        public void Jouer(Joueur joueur, List<Joueur> listeJoueurs, PaquetDepot paquetD, PaquetPioche paquetP)
+        //Joueur joueur, int carteChoisi, PaquetDepot paquetD, PaquetPioche paquetP, string couleur
+        public static Carte BotChoisiCarte(Joueur joueur, PaquetDepot paquetD)
         {
+           bool ok;
+           for(int i = 0; i < joueur.NbCartes(); i++)
+            {
+                ok = VerifierCarte(joueur, i, paquetD);
+                if (ok == true)
+                {
+                    return joueur.GetCarte(i);
+                }
+            }
+            return null;
+        }
+
+        public static void Jouer(Joueur joueur, List<Joueur> listeJoueurs, PaquetDepot paquetD, PaquetPioche paquetP)
+        {
+            Carte carte;
             int index = listeJoueurs.IndexOf(joueur);
-            //Joueur joueur;
-            string couleur = "";
-            int carteChoisi = 0;
-            int sens = 1;
-            int saut = 0;
-            bool verification;
             bool gameover = false;
             while (!gameover)
             {
                 try
                 {
-                    int test = paquetD.GetTop();
-                    verification = true;
+                   
                     joueur = listeJoueurs.ElementAt(index);
+                    Console.WriteLine("------------------------------------------------------------------------------");
                     Console.WriteLine("\nC'est le tour à " + joueur.ToString() + "\n");
-                    if(couleur != "")
-                    {
-                        Console.WriteLine("Joueur une carte de couleur " + couleur);
-                    }
-                    else
-                    {
-                        Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte().ToString());
-                    }
+                    Console.WriteLine("La dernière carte jouée est: " + paquetD.VoirCarte().ToString());
                     Console.WriteLine("Voici votre paquet: \n" + joueur.GetMain());
-                    Console.WriteLine("Entrez " + joueur.NbCartes() + " pour piger.");
-                    Console.WriteLine("Entrez un chiffre pour jouer.");
-                    while (verification) 
-                    {
-                        carteChoisi = Int32.Parse(Console.ReadLine());
-                        if (carteChoisi == joueur.NbCartes())
-                        {                       
+                    //await Task.Delay(3000);
 
-                            verification = GererPiocheVide(paquetP, paquetD, listeJoueurs, joueur);
+                    //Le bot choisi sa carte à jouer.
+                    carte = BotChoisiCarte(joueur, paquetD);
+
+                        if(carte == null)
+                        {
+                            GererPige(paquetP, paquetD, joueur);
                         }
                         else
                         {
-                            verification = VerifierCarte(joueur, carteChoisi, paquetD, paquetP, couleur);
+                            joueur.JouerCarte(carte);
                         }
-                    }
-                    if (!(carteChoisi == joueur.NbCartes()-1))
-                    {
 
-
-                        int val = joueur.GetCarte(carteChoisi).GetValeur();
-                        joueur.JouerCarte(carteChoisi);
-
-                        switch (val)
-                        {
-                            case 1:
-                                Console.WriteLine("Le prochain joueur passe son tour.");
-                                saut = 1;
-                                index = Tour(listeJoueurs, sens, saut, index);
-                                break;
-                            case 7:
-                               
-                                index = Tour(listeJoueurs, sens, saut, index);
-                                Joueur joueur2 = listeJoueurs.ElementAt(index);
-                                if(paquetP.GetNbCartes() >= 2)
-                                {
-                                    Console.WriteLine("Le prochain joueur pige deux cartes. ");
-                                    joueur2.PushCard(paquetP.GetCarte());
-                                    joueur2.PushCard(paquetP.GetCarte());
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Le prochain joueur ne peut pas piger deux cartes.");
-                                }
-                                break; 
-                            case 10:
-                                Console.WriteLine("Inversement de sens.");
-                                sens = -1;
-                                index = Tour(listeJoueurs, sens, saut, index);
-                                break;
-                            case 11:
-                                couleur =  ChangementCouleur(couleur);
-                                index = Tour(listeJoueurs, sens, saut, index);
-                                break;
-                            default:
-                                index = Tour(listeJoueurs, sens, saut, index);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        index = Tour(listeJoueurs, sens, saut, index);
-                    }
+                    index = Tour(listeJoueurs, index);
                     
-                    gameover = VerifierGagnant(listeJoueurs);
+                    
+                    gameover = joueur.Gagnant();
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("J'ai attrapé l'erreur ici");
                     Console.WriteLine(e.Message);
                 }
             }
+
+            Console.WriteLine("Le gagnant est: {0}!\n", joueur.ToString());
         }
 
-        public static string ChangementCouleur(string changementCouleur)
+        //Determine s'il faut rebrasser le paquet. 
+        public static void GererPige(PaquetPioche paquetP, PaquetDepot paquetD, Joueur joueur)
         {
-            Console.WriteLine("Entrez la nouvelle Couleur (trefle, carreau, coeur, pique).");
-            try
-            {
-               bool sortir = true;
-                while (sortir)
-                {
-                    changementCouleur = Console.ReadLine();
-                    switch (changementCouleur)
-                    {
-                        case "trefle":
-                            Console.WriteLine("La couleur choisi est trefle.");
-                            sortir = false;
-                            break;
-                        case "carreau":
-                            Console.WriteLine("La couleur choisi est carreau.");
-                            sortir = false;
-                            break;
-                        case "coeur":
-                            Console.WriteLine("La couleur choisi est coeur.");
-                            sortir = false;
-                            break;
-                        case "pique":
-                            Console.WriteLine("La couleur choisi est pique.");
-                            sortir = false;
-                            break;
-                        default:
-                            Console.WriteLine("Ce n'est pas une couleur.");
-                            sortir = true;
-                            break;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return changementCouleur;
-        }
-
-        public static bool GererPiocheVide(PaquetPioche paquetP, PaquetDepot paquetD, List<Joueur> listeJoueurs, Joueur joueur)
-        {
-
+            Carte carte;
             if(paquetD.GetTop() > 0 && paquetP.GetNbCartes() == 0)
             {
                 Console.WriteLine("Le paquet est vide. Il va donc être rebrassé.");
-                    Carte[] cartes = paquetD.GetPaquet();
-                    int top = paquetD.GetTop();
-                    paquetP.TransfererPaquet(cartes, top);
-                paquetP.Brasser(1000);
-                joueur.PushCard(paquetP.GetCarte());//test
-                return false;
+                Carte[] cartes = paquetD.GetPaquet();
+                int top = paquetD.GetTop();
+                paquetP.TransfererPaquet(cartes, top);
+                paquetD.Vider();
+                paquetP.Brasser(10000);
+                joueur.Pige(paquetP.GetCarte());
 
             }
             else if(paquetD.GetTop() == 0 && paquetP.GetNbCartes() == 0)
             {
                 Console.WriteLine("Vous ne pouvez pas piger de carte.");
-                return true;
             }
             else if(paquetP.GetNbCartes() > 0)
             {
-                joueur.PushCard(paquetP.GetCarte());
-                return false;
+                carte = paquetP.GetCarte();
+                if (carte == null)
+                    Console.WriteLine("Erreur. Le joueur ne peut pas piger");
+                else
+                {
+                    Console.WriteLine("Le joueur a pigé.");
+                    joueur.Pige(carte);
+                }
             }
-            return true;
-          
         }
 
+        //Determine si l'index qui pointe les joueurs sont out of bound.
         public static int OutOfBound(List<Joueur> listeJoueurs, int index)
         {
             if (index < 0)
             {
                 index = listeJoueurs.Count - 1;
-                //return index;
             }
             else if (index >= listeJoueurs.Count)
             {
                 index = 0;
-                //return index;
             }
             return index;
         }
 
-        public static int Tour(List<Joueur> listeJoueurs, int sens, int saut, int index)
+        //Gere les tours et decide qui doit jouer.
+        public static int Tour(List<Joueur> listeJoueurs, int index)
         {
-            try
-            {
-                //Joueur joueur = null;
-                if(sens == 1 && saut == 0)
-                {
-                    index++;
-                }
-                else if (sens == -1 && saut == 0)
-                {
-                    index--;
-                }
-                else if(sens == 1 && saut == 1)
-                {
-                    index += 2;
-                }
-                else if(sens == -1 && saut == 1)
-                {
-                    index -= 2;
-                }
-                index = OutOfBound(listeJoueurs, index);
+            index++;
+            if (index >= listeJoueurs.Count)
+                index = 0;
 
-                return index;
-            }
-            catch
-            {
-                Console.WriteLine("erreur attrapé dans la méthode tour");
-            }
             return index;
         }
 
-        public static bool VerifierCarte(Joueur joueur, int carteChoisi, PaquetDepot paquetD, PaquetPioche paquetP, string couleur)
+        public static bool VerifierCarte(Joueur joueur, int carteChoisi, PaquetDepot paquetD)
         {
-            if(couleur != "")
+            int valet = joueur.GetCarte(carteChoisi).GetValeur();
+            if(valet == 11)
             {
-                //if(joueur.GetCarte(carteChoisi).GetCouleur() )
+                return true;
             }
-
-            if (joueur.GetCarte(carteChoisi).GetCouleur() == paquetD.VoirCarte().GetCouleur() ||
-                joueur.GetCarte(carteChoisi).GetValeur() == paquetD.VoirCarte().GetValeur())
+            else if (joueur.GetCarte(carteChoisi).GetCouleur() == paquetD.VoirCarte().GetCouleur() ||
+                    joueur.GetCarte(carteChoisi).GetValeur() == paquetD.VoirCarte().GetValeur())
             {
-                return false;
+                return true;
             }
             else
             {
-                Console.WriteLine("Vous ne pouvez pas jouer cette carte.");
-                return true;
+                return false;
             }
         }
 
-        public static bool VerifierGagnant(List<Joueur> listeJoueurs)
+        public static Joueur JoueurDepart(List<Joueur> listeJoueurs, int nbJoueurs)
         {
-            bool gameover = false;
-            foreach(Joueur joueur in listeJoueurs)
-            {
-                if(joueur.NbCartes() == 0)
-                {
-                    gameover = true;
-                    return gameover;
-                }
-                else
-                {
-                    return gameover;
-                }
-            }
-            return gameover;
-        }
-
-        public Joueur JoueurDepart(List<Joueur> listeJoueurs, int nbJoueurs)
-        {
-
             Random rand = new Random();
             int randNum = rand.Next(0, nbJoueurs);
             return listeJoueurs.ElementAt(randNum);
+        }
+
+        public static Carte.Couleur RandomCouleur()
+        {
+            Random rand = new Random();
+            int randNum = rand.Next(0, 3);
+            switch (randNum)
+            {
+                case 0:
+                    return Carte.Couleur.Carreau;
+                case 1:
+                    return Carte.Couleur.Coeur;
+                case 2:
+                    return Carte.Couleur.Pique;
+                case 3:
+                    return Carte.Couleur.Trefle;
+            }
+            return Carte.Couleur.Carreau;
         }
     }
 }

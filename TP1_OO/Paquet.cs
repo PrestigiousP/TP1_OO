@@ -157,7 +157,7 @@ namespace TP1_OO
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    listeJoueurs.ElementAt(index).PushCard(paquet[top]);
+                    listeJoueurs.ElementAt(index).Pige(paquet[top]);
                     paquet[top] = null;
                     top--;
                 }
@@ -170,6 +170,7 @@ namespace TP1_OO
             for(int i = 0; i < 51; i++)
             {
                 paquet[i] = null;
+                //top--;
             }
         }
 
