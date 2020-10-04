@@ -7,6 +7,9 @@ namespace TP1_OO
 {
     class PaquetDepot : Paquet
     {
+        public delegate Carte DelegateCarte();
+
+
         private Carte[] paquetDepot = new Carte[52];
         private int top;
         public PaquetDepot() : base()
@@ -19,21 +22,27 @@ namespace TP1_OO
         {
             return paquetDepot;
         }
-        /*public void RebrasserCartes()
-        {
-            for(int i = top-1; i > -1; i--)
-            {
-                paquetDepot[i] = 
-            }
-        }*/
 
         public int GetTop()
         {
             return top;
         }
 
+        new public void Vider()
+        {
+            paquetDepot[0] = paquetDepot[top];
+
+            int borne = top;
+            for (int i = borne; i > 1; i--)
+            {
+                paquetDepot[i] = null;
+                top--;
+            }
+        }
+
         public Carte VoirCarte()
         {
+            int test = top;
             Carte carte = paquetDepot[top];
             return carte;
         }

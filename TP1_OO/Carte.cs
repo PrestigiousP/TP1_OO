@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TP1_OO
 {
-   
+
     class Carte
     {
         //Valeurs que prend une carte.
