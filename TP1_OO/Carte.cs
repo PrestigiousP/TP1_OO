@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TP1_OO
 {
-   
+
     class Carte
     {
         //Valeurs que prend une carte.
@@ -27,16 +27,15 @@ namespace TP1_OO
             this.couleur = couleur;
         }
         
-       public int getValeur()
+       public int GetValeur()
         {
             return valeur;
         }
 
-       public Couleur getCouleur()
+       public Couleur GetCouleur()
         {
             return couleur;
         }
-
         
        override public string ToString()
         {
@@ -103,7 +102,6 @@ namespace TP1_OO
             }
             name = val + " de " + coul;
             return name;
-            //Console.WriteLine()
 
         }
 

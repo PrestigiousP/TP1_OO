@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TP1_OO
 {
@@ -8,10 +11,7 @@ namespace TP1_OO
     {
         static void Main(string[] args)
         {
-
             MenuPrincipal();
-            //oieagjaoiuewhgoipasjdpfgoijawepfouhaewoifuhaweoiu
-
             //Menu principal.
             static void MenuPrincipal()
             {
@@ -29,21 +29,19 @@ namespace TP1_OO
                         switch (choix)
                         {
                             case 1:
-                                //aller au deuxieme menu
-                                MenuSecondaire();
+                                MenuSecondaire();                
                                 break;
                             case 2:
-                                on = false;
+                                Environment.Exit(0);
                                 break;
                             default:
                                 Console.WriteLine("Vous devez entrer 1 ou 2");
                                 break;
                         }
                     }
-                    catch (Exception e)
+                    catch
                     {
-                        //incomplet
-                        Console.WriteLine(e);
+                        Console.WriteLine("Entrée invalide.");
                     }
                 }
             }
@@ -55,6 +53,20 @@ namespace TP1_OO
                 bool on = true;
                 while (on)
                 {
+                    PaquetPioche paquetP = new PaquetPioche();
+                    PaquetDepot paquetD = new PaquetDepot();
+                    Paquet paquet = new Paquet();
+
+                    Joueur joueur1 = new Joueur("", "", paquetD, paquetP);
+                    Joueur joueur2 = new Joueur("", "", paquetD, paquetP);
+                    Joueur joueur3 = new Joueur("", "", paquetD, paquetP);
+                    Joueur joueur4 = new Joueur("", "", paquetD, paquetP);
+
+                    List<Joueur> listeJoueurs = new List<Joueur>();
+                    listeJoueurs.Clear();
+
+                    Partie partie = new Partie();
+
                     Console.WriteLine("Entrez le nombre de joueurs: ");
                     Console.WriteLine("1 - Deux joueurs");
                     Console.WriteLine("2 - Trois Joueurs");
@@ -66,40 +78,131 @@ namespace TP1_OO
                         switch (choix)
                         {
                             case 1:
-                                //ajouter deux joueurs.
-                                Test();
+                                for (int i = 1; i <= 2; i++)
+                                {
+                                    Console.WriteLine("Joueur #" + i);
+
+                                    if (i == 1)
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur1.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur1.SetPnom(Console.ReadLine());
+                                    }
+                                    else 
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur2.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur2.SetPnom(Console.ReadLine());
+                                    }
+
+                                }
+
+                                listeJoueurs.Add(joueur1);
+                                listeJoueurs.Add(joueur2);
+
                                 break;
                             case 2:
+                                for (int i = 1; i <= 3; i++)
+                                {
+                                    Console.WriteLine("Joueur #" + i);
+
+                                    if (i == 1)
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur1.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur1.SetPnom(Console.ReadLine());
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur2.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur2.SetPnom(Console.ReadLine());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur3.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur3.SetPnom(Console.ReadLine());
+                                    }
+
+                                }
+                               
+                                listeJoueurs.Add(joueur1);
+                                listeJoueurs.Add(joueur2);
+                                listeJoueurs.Add(joueur3);
                                 //ajouter trois joueurs.
                                 break;
                             case 3:
+                                for (int i = 1; i <= 4; i++)
+                                {
+                                    Console.WriteLine("Joueur #" + i);
+
+                                    if (i == 1)
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur1.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur1.SetPnom(Console.ReadLine());
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur2.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur2.SetPnom(Console.ReadLine());
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur3.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur3.SetPnom(Console.ReadLine());
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Quel est votre nom?");
+                                        joueur4.SetNom(Console.ReadLine());
+                                        Console.WriteLine("Quel est votre prénom?");
+                                        joueur4.SetPnom(Console.ReadLine());
+                                    }
+
+                                }
+
+                                listeJoueurs.Add(joueur1);
+                                listeJoueurs.Add(joueur2);
+                                listeJoueurs.Add(joueur3);
+                                listeJoueurs.Add(joueur4);
                                 //ajouter quatre joueurs.
                                 break;
                             case 4:
-                                on = false;
+                                Environment.Exit(0);
                                 break;
                             default:
                                 Console.WriteLine("Vous devez entrer un chiffre entre 1 et 4");
                                 break;
                         }
+                        
                     }
-                    catch (Exception e)
+                    catch 
                     {
-                        //incomplet
-                        Console.WriteLine(e);
+                        Console.WriteLine("Entrée invalide.");
                     }
+                    partie.startPartie(listeJoueurs, paquetD, paquetP, paquet);
                 }
 
             }
-            static void Test()
+
+            static void EntrerJoueur(Joueur joueur)
             {
-                Paquet paquet = new Paquet();
-                for(int i = 0; i < 52; i++)
-                {
-                   //Console.WriteLine(paquet.getCarte(i));
-                    paquet.Brasser(1000);
-                    Console.WriteLine(paquet.getCarte(i));
-                }
+                Console.WriteLine("Quel est votre nom?");
+                joueur.SetNom(Console.ReadLine());
+                Console.WriteLine("Quel est votre prénom?");
+                joueur.SetPnom(Console.ReadLine());
             }
         }
     }
