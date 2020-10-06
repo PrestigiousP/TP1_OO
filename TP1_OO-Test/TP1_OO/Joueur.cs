@@ -97,26 +97,49 @@ namespace TP1_OO
 
         public void OnCardPlayed(Object source, PlayerEventArgs e, CardEventArgs s)
         {
-            
-            //Thread.Sleep(2500);
+
             if (e.Joueur == this)
             {
-                Thread.Sleep(5000);
+                
 
                 for (int i = 0; i < this.nbCartes(); i++)
                 {
                     try
                     {
-                        if (s.Carte.GetCouleur() == this.getCarte(i).GetCouleur() || s.Carte.GetValeur() == this.getCarte(i).GetValeur())
+                        //Valet peut être jouer à n'importe quel moment
+                        if (this.getCarte(i).GetValeur() == 11)
                         {
-                            this.jouerCarte(this.getCarte(i));
+                            var t = Task.Factory.StartNew(() =>
+                            {
+                                Task.Delay(1500).Wait();
+                                Console.WriteLine(this.pnom + " " + this.nom + " a joué un  : " + this.getCarte(i));
+                                this.jouerCarte(this.getCarte(i));
+                            });
+                            t.Wait();
+                            break;
+                        }
+                        //Vérifie que la carte peut être jouer
+                        else if (s.Carte.GetCouleur() == this.getCarte(i).GetCouleur() || s.Carte.GetValeur() == this.getCarte(i).GetValeur())
+                        {
+                            var t = Task.Factory.StartNew(() =>
+                            {
+                                Task.Delay(1500).Wait();
+                                Console.WriteLine(this.pnom + " " + this.nom + " a joué un/une " + this.getCarte(i));
+                                this.jouerCarte(this.getCarte(i));
+                            });
+                            t.Wait();
                             break;
                         }
 
                         else if (i == this.nbCartes() - 1)
                         {
-                            this.pige(paquetP.getCarte());
-                            Console.WriteLine("Vous avez pigé un/une " + this.getCarte(this.nbCartes()-1));
+                            var t = Task.Factory.StartNew(() =>
+                            {
+                                Task.Delay(1500).Wait();
+                                this.pige(paquetP.getCarte());
+                                Console.WriteLine("Vous avez pigé un/une " + this.getCarte(this.nbCartes() - 1));
+                            });
+                            t.Wait();
                             break;
                         }
                     }

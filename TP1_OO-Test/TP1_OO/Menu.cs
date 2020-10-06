@@ -9,7 +9,7 @@ namespace TP1_OO
 {
     public class Menu
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             MenuPrincipal();
 
@@ -114,7 +114,7 @@ namespace TP1_OO
                         Console.WriteLine("Entrée invalide.");
                     }
                     Partie partie = new Partie(listeJoueurs, paquetD, paquetP);
-                    partie.startPartie();
+                    partie.startPartieAsync();
                 }
 
             }
@@ -123,7 +123,8 @@ namespace TP1_OO
             {
                 for (int ctr = 0; ctr < listJoueur.Count; ctr++)
                 {
-                    Console.WriteLine("Joueur #" + ctr);
+                    Console.WriteLine("--------------------------------------------------------------");
+                    Console.WriteLine("Joueur #" + (ctr+1));
                     Console.WriteLine("Quel est votre nom?");
                     listJoueur[ctr].setNom(Console.ReadLine());
                     Console.WriteLine("Quel est votre prénom?");

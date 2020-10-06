@@ -54,7 +54,7 @@ namespace TP1_OO
 
         
         //regroupement des methodes pour initialiser une partie
-        public void startPartie()
+        public async void startPartieAsync()
         {
             //Distribue les cartes aux joueurs.
             pioche.distribuerCartes(listeJoueur);
@@ -83,7 +83,7 @@ namespace TP1_OO
                     {
                         //Notifier tous les abonnées
                         OnCardPlayed(listeJoueur[indexJoueur], depot.voirCarte());
-                        Task.Delay(3000);
+                        Task.Delay(1000).Wait();
 
                         tour();
                         if (pioche.getNbCartes() == 0)
@@ -98,7 +98,7 @@ namespace TP1_OO
                     });
 
                     t.Wait();
-                   
+
                 }
                 catch (Exception e)
                 {
@@ -119,25 +119,5 @@ namespace TP1_OO
             return indexJoueur;
         }
 
-        //À REVOIR
-        public static Carte.Couleur RandomCouleur()
-        {
-            Random rand = new Random();
-            int randNum = rand.Next(0, 3);
-            switch (randNum)
-            {
-                case 0:
-                    return Carte.Couleur.Carreau;
-                case 1:
-                    return Carte.Couleur.Coeur;
-                case 2:
-                    return Carte.Couleur.Pique;
-                case 3:
-                    return Carte.Couleur.Trefle;
-            }
-            return Carte.Couleur.Carreau;
-        }
-
-        
     }
 }
