@@ -12,8 +12,6 @@ namespace TP1_OO
         static void Main(string[] args)
         {
             MenuPrincipal();
-
-            //lolipop
             //Menu principal.
             static void MenuPrincipal()
             {
